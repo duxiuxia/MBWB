@@ -45,7 +45,6 @@ plotSpectra <- function(file_path, file_name, scans) {
                     
                     plot(current_scan_mass, current_intensity_values, type="h")
 
-                    current_spectrum <- data.frame(mass=current_scan_mass, intensity=current_intensity_values)
                     
                     
                     
