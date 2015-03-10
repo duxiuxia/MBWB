@@ -4,8 +4,11 @@
 
 
 
-plotSpectra <- function(file_path, file_name, scans) {
+plotSpectra_gVis_function <- function(file_path, file_name, scans) {
     
+    if( !is.element("googleVis", installed.packages()[,1]) )
+        install.packages("googleVis")
+  
     library(googleVis)
     
     in_file_full_name <- paste(file_path, file_name, sep=.Platform$file.sep)
@@ -15,6 +18,9 @@ plotSpectra <- function(file_path, file_name, scans) {
     
     if (ind_CDF != -1) {
         cat("Processing a cdf file ... \n")
+        
+        if( !is.element("ncdf", installed.packages()[,1]) )
+            install.packages("ncdf")
         
         library(ncdf)
         
@@ -45,14 +51,23 @@ plotSpectra <- function(file_path, file_name, scans) {
                     
                     plot(current_scan_mass, current_intensity_values, type="h")
 
+                    data_for_gVis <- data.frame(x=current_scan_mass, y=current_intensity_values)
+                    object_for_gVis <- gvisScatterChart(data_for_gVis, 
+                                                        options=list(explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
+                                                          #chartArea="{width:'85%',height:'80%'}",
+                                                          tooltip="{isHtml: 'True'}",              
+                                                          crosshair="{trigger: 'both'}",                         
+                                                          legend="none", 
+                                                          lineWidth=2, pointSize=1,                                                     
+                                                          vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
+                                                          hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
+                                                          width=750, height=500))  
                     
-                    
-                    
-
-
+                    plot(object_for_gVis)
   
                 }
                 readline(prompt="")
+                
             } else {
                 error_message <- paste("Error: scan ", i, " out of range!")
                 print(error_message)
