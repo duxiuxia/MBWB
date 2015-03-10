@@ -66,13 +66,15 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                     current_scan_mass <- rbind(current_scan_mass, current_scan_mass, current_scan_mass)
                     current_scan_mass <- as.vector(current_scan_mass)
                     
-                    current_intentisy_values <- rbind(rep(0, length(current_intensity_values)), 
-                                                      current_intensity_values, 
-                                                      rep(0, length(current_intensity_values)))
-                    current_intensity_values <- as.vector(current_intensity_values)
+                    current_intensity_values1 <- rbind(rep(0, length(current_intensity_values)), 
+                                                       current_intensity_values[1:length(current_intensity_values)],
+                                                       rep(0, length(current_intensity_values)))
+            
+                    
+                    current_intensity_values1 <- as.vector(current_intensity_values1)
                     
                     
-                    data_for_gVis <- data.frame(x=current_scan_mass, y=current_intensity_values)
+                    data_for_gVis <- data.frame(x=current_scan_mass, y=current_intensity_values1)
                     
                     
                     object_for_gVis <- gvisScatterChart(data_for_gVis, 
@@ -82,7 +84,7 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                                                             tooltip="{isHtml: 'True'}",              
                                                             crosshair="{trigger: 'both'}",                         
                                                             legend="none", 
-                                                            lineWidth=2, pointSize=0,                                                     
+                                                            lineWidth=1, pointSize=0,                                                     
                                                             vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
                                                             hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
                                                             width=750, height=500
@@ -93,7 +95,8 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                     plot(object_for_gVis)
   
                 } # if (point_start != point_end)
-                # readline(prompt="")
+                
+                readline(prompt="")
                 
             } else {
                 error_message <- paste("Error: scan ", i, " out of range!")
