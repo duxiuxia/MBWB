@@ -24,7 +24,11 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
         
         library(ncdf)
         
+
+        
         in_file_full_name <- paste(file_path, file_name, sep=.Platform$file.sep)
+        
+        
         
         ncid <- open.ncdf(in_file_full_name)
         #     print(ncid)
@@ -36,45 +40,68 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
         
         scan_count <- length(point_count)
         
+        
+        
         close.ncdf(ncid)
         
+        
+        
         for (i in scans) {
-            if (i <= scan_count){
+            if (i <= scan_count) {
                 
                 point_start <- sum(point_count[1:i-1])+1
                 point_end <- sum(point_count[1:i])
                 
-                if (point_start != point_end){
+                if (point_start != point_end) {
                     current_scan_mass <- mass_values[point_start:point_end]
                     current_intensity_values <- intensity_values[point_start:point_end]
                     current_scan_time <- i * inter_scan_time[1]
                     
                     plot(current_scan_mass, current_intensity_values, type="h")
 
+                    
+                    current_scan_mass <- as.numeric(current_scan_mass)
+                    current_intensity_values <- as.numeric(current_intensity_values)
+                    
+                    current_scan_mass <- rbind(current_scan_mass, current_scan_mass, current_scan_mass)
+                    current_scan_mass <- as.vector(current_scan_mass)
+                    
+                    current_intentisy_values <- rbind(rep(0, length(current_intensity_values)), 
+                                                      current_intensity_values, 
+                                                      rep(0, length(current_intensity_values)))
+                    current_intensity_values <- as.vector(current_intensity_values)
+                    
+                    
                     data_for_gVis <- data.frame(x=current_scan_mass, y=current_intensity_values)
+                    
+                    
                     object_for_gVis <- gvisScatterChart(data_for_gVis, 
-                                                        options=list(explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
-                                                          #chartArea="{width:'85%',height:'80%'}",
-                                                          tooltip="{isHtml: 'True'}",              
-                                                          crosshair="{trigger: 'both'}",                         
-                                                          legend="none", 
-                                                          lineWidth=2, pointSize=1,                                                     
-                                                          vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
-                                                          hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
-                                                          width=750, height=500))  
+                                                        options=list(
+                                                            explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
+                                                            chartArea="{width:'85%',height:'80%'}",
+                                                            tooltip="{isHtml: 'True'}",              
+                                                            crosshair="{trigger: 'both'}",                         
+                                                            legend="none", 
+                                                            lineWidth=2, pointSize=0,                                                     
+                                                            vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
+                                                            hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
+                                                            width=750, height=500
+                                                            )
+                                                        )  
+                    
                     
                     plot(object_for_gVis)
   
-                }
-                readline(prompt="")
+                } # if (point_start != point_end)
+                # readline(prompt="")
                 
             } else {
                 error_message <- paste("Error: scan ", i, " out of range!")
                 print(error_message)
                 
                 return(0)
-            }
-        }
+            } # end if (i <= scan_count)
+        } # for (i in scans)
         
         print("Done!")
         return(1)
