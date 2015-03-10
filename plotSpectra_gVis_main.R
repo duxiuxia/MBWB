@@ -23,13 +23,17 @@ setwd(code_path)
 
 
 # plot mass vs RT time
-source(paste(code_path, "plotMass_RT_map.R", sep=.Platform$file.sep))
-# in_file_name <- "CYSTEINE02.CDF"
-# in_file_name <- "2014-0910_4_MeOH,H2O_Ecoli_LowResCID_8MSMS.mzXML"
-# in_file_name <- "SD_08292013_Weiss_Ret_Pos_08152013_D401.CDF"
-in_file_name <- "DC12_10SPLIT_CI_1.CDF"
+function_file_name <- paste(code_path, "plotMass_RT_map.R", sep=.Platform$file.sep)
+source(function_file_name
+
+in_file_name <- "D_C12_10SPLIT_1.CDF"
 
 scans <- 500:700
+
+plotSpectra_gVis(file_path=file_path, file_name=in_file_name, scans)
+
+
+
 
 re <- plotMass_RT_map(file_path=file_path, file_name=in_file_name, scans=scans, allScan=F)
 
