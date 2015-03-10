@@ -23,8 +23,5 @@ source(function_file_name)
 
 
 
-scans <- 500:501
+scans <- 600:605
 re <- plotSpectra_gVis_function(file_path=file_path, file_name=in_file_name, scans)
-
-
-

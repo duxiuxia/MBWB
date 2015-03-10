@@ -84,7 +84,8 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                                                             tooltip="{isHtml: 'True'}",              
                                                             crosshair="{trigger: 'both'}",                         
                                                             legend="none", 
-                                                            lineWidth=1, pointSize=0,                                                     
+                                                            lineWidth=1, pointSize=0, 
+                                                            title=paste("scan = ", i),
                                                             vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
                                                             hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
                                                             width=750, height=500
