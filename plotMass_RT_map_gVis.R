@@ -9,6 +9,7 @@
 
 plotMass_RT_map_gVis <- function(file_path, file_name, scans, allScan) {
     
+    
     in_file_full_name <- paste(file_path, file_name, sep=.Platform$file.sep)
     
     ind_CDF <- regexpr(".CDF", file_name, ignore.case=T)
@@ -41,7 +42,8 @@ plotMass_RT_map_gVis <- function(file_path, file_name, scans, allScan) {
         
         close.ncdf(ncid)
         
-        acquisition_time_values <- numeric(0)
+        part_acquisition_time_values <- numeric(0)
+        part_mass_values <- numeric(0)
         for (i in scans) {
 
             point_start <- sum(point_count[1:i-1]) + 1
@@ -49,15 +51,17 @@ plotMass_RT_map_gVis <- function(file_path, file_name, scans, allScan) {
             
             current_scan_acquisition_time <- scan_acquisition_time[i]
             
-            acquisition_time_values[point_start:point_end] <- current_scan_acquisition_time
-            
-            plot(acquisition_time_values, mass_values, type="p")
-            
-            return(0)
+            part_acquisition_time_values <- c(part_acquisition_time_values, rep(current_scan_acquisition_time, point_end-point_start+1))
+            part_mass_values <- c(part_mass_values, mass_values[point_start:point_end])
         } 
+        
+        data_for_gVis <- data.frame(x=part_acquisition_time_values, y=part_mass_values)
+        
+        return(data_for_gVis)
     } else {
         cat("Processing a .mzXML file ......")
             
         return(1)
     }       
 }
+

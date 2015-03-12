@@ -4,8 +4,9 @@
 graphics.off()
 rm(list=ls())
 
+library(googleVis)
 
-library(zoom)
+# library(zoom)
 
 
 # file_path <- "/Users/xdu4/Documents/Duxiuxia/Dataset/DHMRI"
@@ -16,7 +17,7 @@ file_path <- "/Users/xdu4/Documents/Duxiuxia/Dataset/Kurland/IROA"
 
 
 
-code_path <- "/Users/xdu4/Documents/Duxiuxia/Code/Library/R"
+code_path <- "/Users/xdu4/Documents/Duxiuxia/myGitHub/MBWB"
 setwd(code_path)
 
 
@@ -25,16 +26,35 @@ setwd(code_path)
 
 
 # plot mass vs RT time
-source(paste(code_path, "plotMass_RT_map.R", sep=.Platform$file.sep))
+source(paste(code_path, "plotMass_RT_map_gVis.R", sep=.Platform$file.sep))
 # in_file_name <- "CYSTEINE02.CDF"
 # in_file_name <- "2014-0910_4_MeOH,H2O_Ecoli_LowResCID_8MSMS.mzXML"
 # in_file_name <- "SD_08292013_Weiss_Ret_Pos_08152013_D401.CDF"
-in_file_name <- "DC12_10SPLIT_CI_1.CDF"
+# in_file_name <- "DC12_10SPLIT_CI_1.CDF"
+in_file_name <- "DC12_13_SPLITLESS_CI_1.CDF"
 
-scans <- 500:700
+scans <- 500:502
 
-re <- plotMass_RT_map(file_path=file_path, file_name=in_file_name, scans=scans, allScan=F)
+re <- plotMass_RT_map_gVis(file_path=file_path, file_name=in_file_name, scans=scans, allScan=F)
 
+plot(re$x, re$y, type="p")
+
+object_for_gVis <- gvisScatterChart(re, 
+                                    options=list(
+                                        explorer="{actions: ['dragToZoom', 
+                                          'rightClickToReset'],
+                                maxZoomIn:0.05}",
+                                        chartArea="{width:'85%',height:'80%'}",
+                                        hAxis="{title: 'Speed (mph)', 
+                               titleTextStyle: {color: '#000000'}}",
+                                        vAxis="{title: 'Stopping distance (ft)', 
+                               titleTextStyle: {color: '#000000'}}",
+                                        title="Speed and stopping distances of cars in the 1920s",
+                                        width=1000, height=1000,
+                                        legend="none"),
+                                    chartid="mass vs rt")
+
+plot(object_for_gVis)
 
 
 
