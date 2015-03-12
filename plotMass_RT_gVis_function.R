@@ -9,7 +9,6 @@
 
 plotMass_RT_gVis_function <- function(file_path, file_name, scans, allScan) {
     
-    
     in_file_full_name <- paste(file_path, file_name, sep=.Platform$file.sep)
     
     ind_CDF <- regexpr(".CDF", file_name, ignore.case=T)
@@ -51,17 +50,14 @@ plotMass_RT_gVis_function <- function(file_path, file_name, scans, allScan) {
             
             current_scan_acquisition_time <- scan_acquisition_time[i]
             
-
-            part_acquisition_time_values<- c(part_acquisition_time_values, rep(current_scan_acquisition_time, point_count[i])
+            part_acquisition_time_values<- c(part_acquisition_time_values, rep(current_scan_acquisition_time, point_count[i]))
             
             part_mass_values <- c(part_mass_values, mass_values[point_start:point_end])
             
-
         } 
         
         data_for_gVis <- data.frame(x=part_acquisition_time_values, y=part_mass_values)
         
-
         object_for_gVis <- gvisScatterChart(data_for_gVis, 
                                             options=list(
                                                 explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
@@ -70,21 +66,19 @@ plotMass_RT_gVis_function <- function(file_path, file_name, scans, allScan) {
                                                 crosshair="{trigger: 'both'}",                         
                                                 legend="none", 
                                                 lineWidth=0, pointSize=2, 
-                                                title=paste("scan = ", i),
-                                                vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
-                                                hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
+                                                # title=paste("scan = ", i),
+                                                vAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                        
+                                                hAxis="{title: 'RT', gridlines: {color: 'transparent'}}",                     
                                                 width=750, height=500
                                             )
         )  
         plot(object_for_gVis)
         
-        return(1)
+        return(scan_count)
         
-
     } else {
         cat("Processing a .mzXML file ......")
             
         return(1)
     }       
 }
-
