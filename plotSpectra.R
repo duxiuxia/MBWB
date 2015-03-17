@@ -84,13 +84,100 @@ plotSpectra <- function(file_path, file_name, scans, zoom) {
                 main_title <- paste("scan = ", i, ", msLevel = ", re[[i]]$metaData$msLevel, sep="")
                 
                 if (re[[i]]$metaData$msLevel == 1) {
-                    plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="l", main=main_title, xlab="mass", ylab="intensity", xlim=c(120, 130))
+                    # plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="h", main=main_title, xlab="mass", ylab="intensity", xlim=c(200, 250))
                     
-                    readline(prompt="")
+                    
+                    
+                    current_scan_mass <- re[[i]]$spectrum$mass
+                    current_intensity_values <- re[[i]]$spectrum$intensity
+                    
+                    current_scan_mass <- as.numeric(current_scan_mass)
+                    current_intensity_values <- as.numeric(current_intensity_values)
+                    
+                    current_scan <- cbind(current_scan_mass, current_intensity_values)
+                    
+                    current_scan_mass <- rbind(current_scan_mass, current_scan_mass, current_scan_mass)
+                    current_scan_mass <- as.vector(current_scan_mass)
+                    
+                    current_intensity_values1 <- rbind(rep(0, length(current_intensity_values)), 
+                                                       current_intensity_values[1:length(current_intensity_values)],
+                                                       rep(0, length(current_intensity_values)))
+                    
+                    
+                    current_intensity_values1 <- as.vector(current_intensity_values1)
+                    
+                    
+                    data_for_gVis <- data.frame(x=current_scan_mass, y=current_intensity_values1)
+                    
+                    
+                    object_for_gVis <- gvisScatterChart(data_for_gVis, 
+                                                        options=list(
+                                                            explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.001}",
+                                                            chartArea="{width:'85%',height:'80%'}",
+                                                            tooltip="{isHtml: 'True'}",              
+                                                            crosshair="{trigger: 'both'}",                         
+                                                            legend="none", 
+                                                            lineWidth=1, pointSize=0, 
+                                                            title=paste("scan = ", i),
+                                                            vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
+                                                            hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
+                                                            width=750, height=500
+                                                        )
+                    )  
+                    
+                    plot(object_for_gVis)
+                    
+                    
+                    
+                    
+                    
+                    # readline(prompt="")
                 } else {
-                    plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="h", main=main_title, xlab="mass", ylab="intensity")
+                    # plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="h", main=main_title, xlab="mass", ylab="intensity")
                     
-                    readline(prompt="")
+                    
+                    
+                    
+                    current_scan_mass <- re[[i]]$spectrum$mass
+                    current_intensity_values <- re[[i]]$spectrum$intensity
+                    
+                    current_scan_mass <- as.numeric(current_scan_mass)
+                    current_intensity_values <- as.numeric(current_intensity_values)
+                    
+                    current_scan_mass <- rbind(current_scan_mass, current_scan_mass, current_scan_mass)
+                    current_scan_mass <- as.vector(current_scan_mass)
+                    
+                    current_intensity_values1 <- rbind(rep(0, length(current_intensity_values)), 
+                                                       current_intensity_values[1:length(current_intensity_values)],
+                                                       rep(0, length(current_intensity_values)))
+                    
+                    
+                    current_intensity_values1 <- as.vector(current_intensity_values1)
+                    
+                    
+                    data_for_gVis <- data.frame(x=current_scan_mass, y=current_intensity_values1)
+                    
+                    
+                    object_for_gVis <- gvisScatterChart(data_for_gVis, 
+                                                        options=list(
+                                                            explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.001}",
+                                                            chartArea="{width:'85%',height:'80%'}",
+                                                            tooltip="{isHtml: 'True'}",              
+                                                            crosshair="{trigger: 'both'}",                         
+                                                            legend="none", 
+                                                            lineWidth=1, pointSize=0, 
+                                                            title=paste("scan = ", i),
+                                                            vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
+                                                            hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
+                                                            width=750, height=500
+                                                        )
+                    )  
+                    
+                    plot(object_for_gVis)
+                    
+                    
+                    
+                    # readline(prompt="")
                 }
 
             } else {
