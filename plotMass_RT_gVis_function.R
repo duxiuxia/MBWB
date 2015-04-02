@@ -83,12 +83,42 @@ plotMass_RT_gVis_function <- function(file_path, file_name, scans, allScan) {
         return(scan_count)
         
     } else {
+        
         cat("Processing a .mzXML file ......")
             
         library("readMzXmlData")
         
         re <- readMzXmlFile(in_file_full_name)
         
+#         plot TIC
+        scan_acquisition_time <- vector(mode="numeric", length=length(re))
+        totalIonCurrent <- vector(mode="numeric", length=length(re))
+        for (i in 1:length(re)) {
+            scan_acquisition_time <- c(scan_acquisition_time, re[[i]]$metaData$retentionTime)
+            totalIonCurrent <- c(totalIonCurrent, sum(re[[i]]$spectrum$intensity))
+        }
+        
+        data_for_gVis <- data.frame(x=scan_acquisition_time, y=totalIonCurrent)
+        
+        object_for_gVis <- gvisScatterChart(data_for_gVis, 
+                                    options=list(
+                                        explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.0000001}",
+                                        chartArea="{width:'85%',height:'80%'}",
+                                        tooltip="{isHtml: 'True'}",              
+                                        crosshair="{trigger: 'both'}",                         
+                                        legend="none", 
+                                        lineWidth=1, pointSize=0, 
+                                        title=paste("TIC"),
+                                        vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
+                                        hAxis="{title: 'RT', gridlines: {color: 'transparent'}}",                     
+                                        width=750, height=500
+                                    )
+        ) 
+
+        plot(object_for_gVis)
+        
+
+#         plot mass vs RT map
         part_acquisition_time_values <- numeric(0)
         part_mass_values <- numeric(0)
         
