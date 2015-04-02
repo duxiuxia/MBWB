@@ -57,7 +57,8 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                     current_intensity_values <- intensity_values[point_start:point_end]
                     current_scan_time <- i * inter_scan_time[1]
                     
-                    plot(current_scan_mass, current_intensity_values, type="h")
+                    main_title <- paste("scan = ", i)
+                    plot(current_scan_mass, current_intensity_values, type="h", main=main_title)
 
                     
                     current_scan_mass <- as.numeric(current_scan_mass)

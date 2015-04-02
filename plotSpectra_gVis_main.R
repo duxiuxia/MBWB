@@ -8,7 +8,7 @@ rm(list=ls())
 
 
 file_path <- "/Users/xdu4/Documents/Duxiuxia/Dataset"
-in_file_name <- "D_C12_10SPLIT_1.CDF"
+in_file_name <- "SD_08292013_Weiss_Ret_Pos_08262013_D401.CDF"
 
 
 
@@ -23,5 +23,5 @@ source(function_file_name)
 
 
 
-scans <- 600:605
+scans <- 801:802
 re <- plotSpectra_gVis_function(file_path=file_path, file_name=in_file_name, scans)
