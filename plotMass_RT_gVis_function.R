@@ -9,6 +9,12 @@
 
 plotMass_RT_gVis_function <- function(file_path, file_name, scans, allScan) {
     
+    if( !is.element("googleVis", installed.packages()[,1]) )
+        install.packages("googleVis")
+    
+    library(googleVis)
+    
+    
     in_file_full_name <- paste(file_path, file_name, sep=.Platform$file.sep)
     
     ind_CDF <- regexpr(".CDF", file_name, ignore.case=T)
@@ -79,6 +85,41 @@ plotMass_RT_gVis_function <- function(file_path, file_name, scans, allScan) {
     } else {
         cat("Processing a .mzXML file ......")
             
+        library("readMzXmlData")
+        
+        re <- readMzXmlFile(in_file_full_name)
+        
+        part_acquisition_time_values <- numeric(0)
+        part_mass_values <- numeric(0)
+        
+        for (i in scans) {
+            current_scan_acquisition_time <- re[[i]]$metaData$retentionTime
+            current_mass <- re[[i]]$spectrum$mass
+            current_intensity <- re[[i]]$spectrum$intensity
+            
+            part_acquisition_time_values<- c(part_acquisition_time_values, rep(current_scan_acquisition_time, length(current_mass)))
+            part_mass_values <- c(part_mass_values, current_mass)
+        }
+        
+        data_for_gVis <- data.frame(x=part_acquisition_time_values, y=part_mass_values)
+        
+        object_for_gVis <- gvisScatterChart(data_for_gVis, 
+                                            options=list(
+                                                explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
+                                                chartArea="{width:'85%',height:'80%'}",
+                                                tooltip="{isHtml: 'True'}",              
+                                                crosshair="{trigger: 'both'}",                         
+                                                legend="none", 
+                                                lineWidth=0, pointSize=1, 
+                                                # title=paste("scan = ", i),
+                                                vAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                        
+                                                hAxis="{title: 'RT', gridlines: {color: 'transparent'}}",                     
+                                                width=750, height=500
+                                            )
+        ) 
+        
+        plot(object_for_gVis)
+        
         return(1)
     }       
 }

@@ -8,12 +8,11 @@ rm(list=ls())
 
 
 file_path <- "/Users/xdu4/Documents/Duxiuxia/Dataset"
-in_file_name <- "D_C12_10SPLIT_1.CDF"
+in_file_name <- "col-0_1.mzXML"
 
 
 
-code_path <- "/Users/xdu4/Documents/Duxiuxia/myGitHub/MBWB"
-setwd(code_path)
+code_path <- getwd()
 
 
 
@@ -22,6 +21,8 @@ function_file_name <- paste(code_path, "plotMass_RT_gVis_function.R", sep=.Platf
 source(function_file_name)
 
 
-scans <- 500:700
+
+
+scans <- 500:510
 
 re <- plotMass_RT_gVis_function(file_path=file_path, file_name=in_file_name, scans=scans, allScan=F)

@@ -136,12 +136,16 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
             if (i <= length(re)) {
                 main_title <- paste("scan = ", i, ", msLevel = ", re[[i]]$metaData$msLevel, sep="")
                 
-                if (re[[i]]$metaData$msLevel == 1) {
+                if (re[[i]]$metaData$centroided == 0) {
                     plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="l", main=main_title, xlab="mass", ylab="intensity", xlim=c(120, 130))
                     
                     readline(prompt="")
                 } else {
                     plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="h", main=main_title, xlab="mass", ylab="intensity")
+                    
+                    object_for_gVis <- create_spectrum_object_for_gVis(x=re[[i]]$spectrum$mass, y=re[[i]]$spectrum$intensity)
+                    
+                    plot(object_for_gVis)
                     
                     readline(prompt="")
                 }
