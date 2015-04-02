@@ -58,7 +58,21 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                     current_scan_time <- i * inter_scan_time[1]
                     
                     main_title <- paste("scan = ", i)
-                    plot(current_scan_mass, current_intensity_values, type="h", main=main_title)
+                    plot(current_scan_mass, current_intensity_values, type="h", xlim=c(354, 370), ylim=c(0, 20000), main=main_title)
+                    
+                    
+                    
+#                     Scatter <- gvisScatterChart(women, 
+#                                                 options=list(
+#                                                     legend="none",
+#                                                     lineWidth=2, pointSize=0,
+#                                                     title="Women", vAxis="{title:'weight (lbs)'}",
+#                                                     hAxis="{title:'height (in)'}", 
+#                                                     width=300, height=300))
+#                     plot(Scatter)
+                    
+                    
+                    
 
                     
                     current_scan_mass <- as.numeric(current_scan_mass)
@@ -81,11 +95,11 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                     object_for_gVis <- gvisScatterChart(data_for_gVis, 
                                                         options=list(
                                                             explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
-                                                            chartArea="{width:'85%',height:'80%'}",
+                                                            # chartArea="{width:'85%',height:'80%'}",
                                                             tooltip="{isHtml: 'True'}",              
                                                             crosshair="{trigger: 'both'}",                         
                                                             legend="none", 
-                                                            lineWidth=1, pointSize=0, 
+                                                            lineWidth=1, pointSize=1, 
                                                             title=paste("scan = ", i),
                                                             vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
                                                             hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
