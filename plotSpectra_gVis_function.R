@@ -61,20 +61,6 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                     plot(current_scan_mass, current_intensity_values, type="h", xlim=c(354, 370), ylim=c(0, 20000), main=main_title)
                     
                     
-                    
-#                     Scatter <- gvisScatterChart(women, 
-#                                                 options=list(
-#                                                     legend="none",
-#                                                     lineWidth=2, pointSize=0,
-#                                                     title="Women", vAxis="{title:'weight (lbs)'}",
-#                                                     hAxis="{title:'height (in)'}", 
-#                                                     width=300, height=300))
-#                     plot(Scatter)
-                    
-                    
-                    
-
-                    
                     current_scan_mass <- as.numeric(current_scan_mass)
                     current_intensity_values <- as.numeric(current_intensity_values)
                     
@@ -94,7 +80,7 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                     
                     object_for_gVis <- gvisScatterChart(data_for_gVis, 
                                                         options=list(
-                                                            explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
+                                                            explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.00000001}",
                                                             # chartArea="{width:'85%',height:'80%'}",
                                                             tooltip="{isHtml: 'True'}",              
                                                             crosshair="{trigger: 'both'}",                         
@@ -143,7 +129,22 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                 } else {
                     plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="h", main=main_title, xlab="mass", ylab="intensity")
                     
-                    object_for_gVis <- create_spectrum_object_for_gVis(x=re[[i]]$spectrum$mass, y=re[[i]]$spectrum$intensity)
+                    data_for_gVis <- create_spectrum_data_for_gVis(x=re[[i]]$spectrum$mass, y=re[[i]]$spectrum$intensity)
+                    
+                    object_for_gVis <- gvisScatterChart(data_for_gVis, 
+                                                        options=list(
+                                                            explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.00000005}",
+                                                            chartArea="{width:'85%',height:'80%'}",
+                                                            tooltip="{isHtml: 'True'}",              
+                                                            crosshair="{trigger: 'both'}",                         
+                                                            legend="none", 
+                                                            lineWidth=1, pointSize=0, 
+                                                            title=paste("scan = ", i),
+                                                            vAxis="{title: 'intensity', gridlines: {color: 'transparent'}}",                        
+                                                            hAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                     
+                                                            width=750, height=500
+                                                        )
+                    )  
                     
                     plot(object_for_gVis)
                     

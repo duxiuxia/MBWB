@@ -23,6 +23,6 @@ source(function_file_name)
 
 
 
-scans <- 500:510
+scans <- 500:520
 
 re <- plotMass_RT_gVis_function(file_path=file_path, file_name=in_file_name, scans=scans, allScan=F)

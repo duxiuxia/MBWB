@@ -21,10 +21,10 @@ function_file_name <- paste(code_path, "plotSpectra_gVis_function.R", sep=.Platf
 source(function_file_name)
 
 
-function_file_name <- paste(code_path, "create_spectrum_object_for_gVis.R", sep=.Platform$file.sep)
+function_file_name <- paste(code_path, "create_spectrum_data_for_gVis.R", sep=.Platform$file.sep)
 source(function_file_name)
 
 
 
-scans <- 811:811
+scans <- 811:820
 re <- plotSpectra_gVis_function(file_path=file_path, file_name=in_file_name, scans)

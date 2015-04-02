@@ -66,7 +66,7 @@ plotMass_RT_gVis_function <- function(file_path, file_name, scans, allScan) {
         
         object_for_gVis <- gvisScatterChart(data_for_gVis, 
                                             options=list(
-                                                explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
+                                                explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.0000001}",
                                                 chartArea="{width:'85%',height:'80%'}",
                                                 tooltip="{isHtml: 'True'}",              
                                                 crosshair="{trigger: 'both'}",                         
@@ -105,12 +105,12 @@ plotMass_RT_gVis_function <- function(file_path, file_name, scans, allScan) {
         
         object_for_gVis <- gvisScatterChart(data_for_gVis, 
                                             options=list(
-                                                explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.05}",
+                                                explorer="{actions: ['dragToZoom', 'rightClickToReset'], maxZoomIn: 0.0000001}",
                                                 chartArea="{width:'85%',height:'80%'}",
                                                 tooltip="{isHtml: 'True'}",              
                                                 crosshair="{trigger: 'both'}",                         
                                                 legend="none", 
-                                                lineWidth=0, pointSize=1, 
+                                                lineWidth=0, pointSize=0.5, 
                                                 # title=paste("scan = ", i),
                                                 vAxis="{title: 'm/z', gridlines: {color: 'transparent'}}",                        
                                                 hAxis="{title: 'RT', gridlines: {color: 'transparent'}}",                     
