@@ -11,6 +11,7 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
   
     library(googleVis)
     
+    
     in_file_full_name <- paste(file_path, file_name, sep=.Platform$file.sep)
     
     ind_CDF <- regexpr(".CDF", file_name, ignore.case=T)
@@ -123,10 +124,30 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                 main_title <- paste("scan = ", i, ", msLevel = ", re[[i]]$metaData$msLevel, sep="")
                 
                 if (re[[i]]$metaData$centroided == 0) {
-                    plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="l", main=main_title, xlab="mass", ylab="intensity", xlim=c(120, 130))
                     
-                    readline(prompt="")
+                    
+                    
+#                     pdf(paste("/Users/xdu4/Downloads", figure_name, sep="")
+#                         
+#                     plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="l", 
+#                          main=main_title, xlab="mass", ylab="intensity", 
+#                          xlim=c(120, 130))
+#                     
+#                     dev.off()
+                    
+#                     readline(prompt="")
                 } else {
+                    
+                    figure_name <- paste("level_6_scan_", i, "_msLevel_", re[[i]]$metaData$msLevel, ".pdf", sep="")
+                    
+                    pdf(paste("/Users/xdu4/Downloads", figure_name, sep=.Platform$file.sep))
+                        
+                    plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="h", 
+                             main=main_title, xlab="mass", ylab="intensity", 
+                             xlim=c(448, 452), ylim=c(0, 1500))
+                        
+                    dev.off()
+                    
                     plot(re[[i]]$spectrum$mass, re[[i]]$spectrum$intensity, type="h", main=main_title, xlab="mass", ylab="intensity")
                     
                     data_for_gVis <- create_spectrum_data_for_gVis(x=re[[i]]$spectrum$mass, y=re[[i]]$spectrum$intensity)
@@ -148,7 +169,7 @@ plotSpectra_gVis_function <- function(file_path, file_name, scans) {
                     
                     plot(object_for_gVis)
                     
-                    readline(prompt="")
+#                     readline(prompt="")
                 }
 
             } else {
